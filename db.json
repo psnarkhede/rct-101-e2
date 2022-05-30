@@ -70,6 +70,18 @@
       "price": "300",
       "imageSrc": "https://picsum.photos/seed/picsum2/421/261",
       "id": 9
+    },
+    {
+      "imageSrc": "https://picsum.photos/seed/picsum4/422/262",
+      "title": "cadc",
+      "category": "pant",
+      "gender": "female",
+      "price": "352103",
+      "id": 10
+    },
+    {
+      "imageSrc": "https://picsum.photos/seed/picsum4/422/262",
+      "id": 11
     }
   ]
 }

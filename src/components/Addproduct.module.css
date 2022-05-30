@@ -1,0 +1,10 @@
+.body{
+    border:1px solid black;
+    margin-top: -500px;
+    background-color: white;
+    width:400px;
+}
+
+.select{
+    background-color: white;
+}

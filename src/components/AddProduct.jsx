@@ -1,34 +1,63 @@
-import React from "react";
+import { Button, Input,Radio, RadioGroup, Select, StylesProvider, useDisclosure } from "@chakra-ui/react";
+import React, { useState } from "react";
+import {
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+} from '@chakra-ui/react'
 
-const AddProduct = () => {
+import Styles from "./Addproduct.module.css"
+
+const AddProduct = ({add}) => {
   // TODO: Remove below const and instead import them from chakra
-  const Button = () => <div />;
-  const Modal = () => <div />;
-  const ModalBody = () => <div />;
-  const Input = () => <div />;
-  const Select = () => <div />;
-  const RadioGroup = () => <div />;
-  const Radio = () => <div />;
+  const { isOpen, onOpen, onClose } = useDisclosure()
 
+  const [indata, setIndata] = useState({imageSrc:"https://picsum.photos/seed/picsum4/422/262"})
+
+  const handlechange = (el) => {
+  
+      if(el === "male" || el === "female" || el === "unisex"){
+        setIndata({...indata,"gender":el})
+      }else{
+        let {name}= el.target;
+      setIndata({...indata,[name]:el.target.value})
+      }
+
+  }
+
+  const handlesubmit = () => {
+    add(indata)
+  }
+  
   return (
     <>
-      <Button my={4} data-cy="add-product-button"></Button>
-      <Modal>
-        <ModalBody pb={6}>
-          <Input data-cy="add-product-title" />
-          <Select data-cy="add-product-category">
-            <option data-cy="add-product-category-shirt"></option>
-            <option data-cy="add-product-category-pant"></option>
-            <option data-cy="add-product-category-jeans"></option>
+      <Button data-cy="add-product-button" onClick={onOpen}>Add Product</Button>
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalBody className={Styles.body} pb={6}>
+          <Input data-cy="add-product-title" onChange={(e) => handlechange(e)} placeholder="title" name="title"  />
+          <Select className={Styles.select} data-cy="add-product-category" name="category" onChange={(e) => handlechange(e)}>
+            <option data-cy="add-product-category-shirt" value="shirt">shirt</option>
+            <option data-cy="add-product-category-pant" value="pant">pant</option>
+            <option data-cy="add-product-category-jeans" value="jeans">jeans</option>
           </Select>
-          <RadioGroup data-cy="add-product-gender">
-            <Radio data-cy="add-product-gender-male"></Radio>
-            <Radio data-cy="add-product-gender-female"></Radio>
-            <Radio data-cy="add-product-gender-unisex"></Radio>
+          <RadioGroup data-cy="add-product-gender" name="gender" onChange={(e) => handlechange(e)}>
+            <Radio data-cy="add-product-gender-male" value="male">male</Radio>
+            <Radio data-cy="add-product-gender-female" value="female">female</Radio>
+            <Radio data-cy="add-product-gender-unisex" value="unisex">unisex</Radio>
           </RadioGroup>
-          <Input data-cy="add-product-price" />
-          <Button data-cy="add-product-submit-button"></Button>
+          <Input data-cy="add-product-price" placeholder="price" name="price" onChange={(e) => handlechange(e)}/>
+          <Button data-cy="add-product-submit-button" onClick={() => handlesubmit()}>Submit</Button>
         </ModalBody>
+        <ModalFooter>
+            <Button colorScheme='blue' mr={3} onClick={onClose}>
+              X
+            </Button>
+            <Button variant='ghost'>Secondary Action</Button>
+          </ModalFooter>
       </Modal>
     </>
   );
